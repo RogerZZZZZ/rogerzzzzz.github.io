@@ -118,17 +118,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">4</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">4</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">5</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">3</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">4</span></a>
 
   </li>
         <li class="menu-item menu-item-todos">
@@ -159,6 +159,114 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://rogerwip.tech/2021/01/18/%E5%A6%82%E4%BD%95%E5%86%99%E4%B8%80%E4%B8%AAgraphql-validation%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/11383095?s=460&u=5327864a46eef4b9ae90c572f3f884813a9a60dc&v=4">
+      <meta itemprop="name" content="RogerZZZZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Work In Progress">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/18/%E5%A6%82%E4%BD%95%E5%86%99%E4%B8%80%E4%B8%AAgraphql-validation%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">如何写一个graphql validation模块</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-18 21:40:43" itemprop="dateCreated datePublished" datetime="2021-01-18T21:40:43+08:00">2021-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-19 21:00:11" itemprop="dateModified" datetime="2021-01-19T21:00:11+08:00">2021-01-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Front-End/" itemprop="url" rel="index"><span itemprop="name">Front End</span></a>
+                </span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/01/18/%E5%A6%82%E4%BD%95%E5%86%99%E4%B8%80%E4%B8%AAgraphql-validation%E6%A8%A1%E5%9D%97/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/18/%E5%A6%82%E4%BD%95%E5%86%99%E4%B8%80%E4%B8%AAgraphql-validation%E6%A8%A1%E5%9D%97/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>6 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>写这篇文章的契机是因为最近项目中使用到了<code>graphql</code>, 为了防止接口出现安全问题, 就对<code>graphql</code>的<code>validation</code>进行了一点研究. 本文就不对<code>graphql</code>进行一些介绍了, 如果感兴趣的小伙伴, 可以移步到官网进行阅读<a target="_blank" rel="noopener" href="https://graphql.org/">链接</a></p>
+<h2 id="初级的防御"><a href="#初级的防御" class="headerlink" title="初级的防御"></a>初级的防御</h2><h3 id="1-关闭内省系统"><a href="#1-关闭内省系统" class="headerlink" title="1. 关闭内省系统"></a>1. 关闭内省系统</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/18/%E5%A6%82%E4%BD%95%E5%86%99%E4%B8%80%E4%B8%AAgraphql-validation%E6%A8%A1%E5%9D%97/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -194,7 +302,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-18 21:38:56" itemprop="dateModified" datetime="2021-01-18T21:38:56+08:00">2021-01-18</time>
+                <time title="Modified: 2021-01-18 21:43:36" itemprop="dateModified" datetime="2021-01-18T21:43:36+08:00">2021-01-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,82 +353,14 @@
       
           <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>作为博客里读书笔记的第一篇文章, 算是给这个系列开一个头吧, 这里的读书比较呢主要记录的是一本书中自己觉得比较有意思的点, 写下来也是为了加深记忆, 点与点之间可能毫无逻辑可言, 大家如果读到觉得感受不是很好的话也请见谅~</p>
 <h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h3 id="代码的坏味道"><a href="#代码的坏味道" class="headerlink" title="代码的坏味道"></a>代码的坏味道</h3><p>这里文章列举了很多代码坏味道, 比如:</p>
-<ul>
-<li>神秘命名</li>
-<li>重复代码</li>
-<li>过长函数</li>
-<li>过长参数列表</li>
-<li>全局数据</li>
-<li>可变数据</li>
-<li>发散式变化</li>
-<li>霰弹式修改<ul>
-<li>每遇到某种变化, 都需要在不同的类中进行小修改</li>
-</ul>
-</li>
-<li>依恋情节<ul>
-<li>与其他模块或者数据交流格外频繁, 甚至超过自身模块</li>
-</ul>
-</li>
-<li>数据泥团<ul>
-<li>多个类中存在相同的数据字段</li>
-</ul>
-</li>
-<li>基本类型偏执<ul>
-<li>执着于使用基本数据类型, 还忽略了抽象</li>
-</ul>
-</li>
-<li>重复的switch<ul>
-<li>可以使用策略模式, map等方式来解决</li>
-</ul>
-</li>
-<li>循环语句<ul>
-<li>多使用pipe的方式, 类似map, reduct, filter等</li>
-</ul>
-</li>
-<li>夸夸其谈的通用性<ul>
-<li>这一点也是需要注意的, 虽然说在开始写代码之前都需要对系统有一个良好的设计, 但是并不意味着需要为以后的功能, 破坏现在代码的可读性, 过度抽象某些类, 需要做的应该是不断的重构优化.</li>
-</ul>
-</li>
-<li>纯数据类<ul>
-<li>指一个类中没有其他的逻辑, 只有数据字段的getter以及setter</li>
-</ul>
-</li>
-<li>注释<ul>
-<li>这一点在文中的说法给我留下了深刻的印象, 不应该用注释来解释阅读星极差的代码, 注释并不是”除臭剂”</li>
-</ul>
-</li>
-</ul>
-<p>接下来是一些书中提到的重构方式</p>
-<h3 id="引入参数对象"><a href="#引入参数对象" class="headerlink" title="引入参数对象"></a>引入参数对象</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">amountInvoiced</span>(<span class="params">startDate, endDate</span>)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// ====&gt;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="function"><span class="keyword">function</span> <span class="title">amountInvoiced</span>(<span class="params">dateRange</span>)</span></span></span><br></pre></td></tr></table></figure>
-<p>配合typescript使用, 效果更佳, 在我实际开发中使用解构来获取函数参数都比过长的参数列表更加优雅, 一方面是可以省去对函数参数顺序的记忆, 另一方面是参数的传入是非常灵活的, 可以对多个参数进行默认值的设置</p>
-<h3 id="以对象取代基本类型"><a href="#以对象取代基本类型" class="headerlink" title="以对象取代基本类型"></a>以对象取代基本类型</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">order.filter(<span class="function"><span class="params">o</span> =&gt;</span> <span class="string">&#x27;high&#x27;</span> === o.priority</span><br><span class="line">  || <span class="string">&#x27;rush&#x27;</span> === o.priority)</span><br><span class="line"></span><br><span class="line"><span class="comment">// =====&gt;</span></span><br><span class="line"></span><br><span class="line">order.filter(<span class="function"><span class="params">o</span> =&gt;</span> o.priority.hightThen(<span class="keyword">new</span> Priority(<span class="string">&#x27;normal&#x27;</span>)))</span><br></pre></td></tr></table></figure>
-<p>也许在一开始书写的时候, 第一种写法能够快速的完成需求, 但是随着业务逻辑不断复杂, 对于<code>priority</code>的判断逻辑不断增多以后, 将会逐渐失控, 如果你对Java有一定的接触, 就会很容易的联想实现<code>compare</code>的接口, 我认为都是一种理念, 对于一些数据字段进行功能的扩展</p>
-<h3 id="拆分循环"><a href="#拆分循环" class="headerlink" title="拆分循环"></a>拆分循环</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> averageAge = <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> totalSalary = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> p <span class="keyword">of</span> people) &#123;</span><br><span class="line">  averageAge += p.age</span><br><span class="line">  totalSalary = p.salary</span><br><span class="line">&#125;</span><br><span class="line">averageAge /= people.length</span><br><span class="line"></span><br><span class="line"><span class="comment">// ======&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> averageAge = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> p <span class="keyword">of</span> people) &#123;</span><br><span class="line">  averageAge += p.age</span><br><span class="line">&#125;</span><br><span class="line">averageAge /= people.length</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> totalSalary = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> p <span class="keyword">of</span> people) &#123;</span><br><span class="line">  totalSalary = p.salary</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也许下面的代码对于很多人来说都是一种坏味道, 甚至我现在也这样觉得, 因为理论上多执行了一次循环, 但是往往在很多的场景中, <strong>循环并不是性能的瓶颈</strong>, 分开书写之后能带来更好的维护性和可读性, 也能方便的拆分代码逻辑</p>
-<h3 id="以多态取代条件表达式"><a href="#以多态取代条件表达式" class="headerlink" title="以多态取代条件表达式"></a>以多态取代条件表达式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(bird.type) &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&#x27;a&#x27;</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;a type&#x27;</span></span><br><span class="line">  <span class="keyword">case</span> <span class="string">&#x27;b&#x27;</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;b type&#x27;</span></span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;default&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AType</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">getType</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;a type&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BType</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">getType</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;b type&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="用多态处理变体逻辑"><a href="#用多态处理变体逻辑" class="headerlink" title="用多态处理变体逻辑"></a>用多态处理变体逻辑</h3><p>当基类中存在对某种特殊情况进行判断计算时, 可以将这部分逻辑从中分离出来, 因为这样的特殊逻辑过多会混淆视听, 让基础的逻辑难以理解</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rating</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.voyage = <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">getRating</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.type === <span class="string">&#x27;a&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">this</span>.voyage * <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.voyage</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rating</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.voyage = <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">getRating</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.type === <span class="string">&#x27;a&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">this</span>.voyage * <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.voyage</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rating</span> </span>&#123;</span><br><span class="line">  <span class="keyword">get</span> <span class="title">getVoyageFactor</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">getRating</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.voyage * <span class="built_in">this</span>.getVoyageFactor()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ATypeRating</span> <span class="title">extens</span> <span class="title">Rating</span> </span>&#123;</span><br><span class="line">  <span class="keyword">get</span> <span class="title">getVoyageFactor</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="将查询函数和修改函数分离"><a href="#将查询函数和修改函数分离" class="headerlink" title="将查询函数和修改函数分离"></a>将查询函数和修改函数分离</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTotalOutstandingAndSendBill</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> result = customer.invoices.reduce(<span class="function">(<span class="params">total, each</span>) =&gt;</span> each.amount + total, <span class="number">0</span>)</span><br><span class="line">  sendBill()</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">totalOutstanding</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> customer.invoices.reduce(<span class="function">(<span class="params">total, each</span>) =&gt;</span> each.amount + total, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendBill</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  sendBill()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>原书中有一句话我印象深刻, 明确表现出<code>有副作用</code>与<code>无副作用</code>两种函数之间的差异, 是个很好的想法.</p>
-<p>任何有返回值的函数, 都不应该有看得到的副作用–<code>命令与查询分离</code></p>
-<h3 id="移除标记参数"><a href="#移除标记参数" class="headerlink" title="移除标记参数"></a>移除标记参数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setDimension</span>(<span class="params">name, value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (name === <span class="string">&#x27;height&#x27;</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>._height = value</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (name === <span class="string">&#x27;width&#x27;</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>._width = value</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// =====&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setHeight</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>._height = value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setWidth</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>._width = value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们通常在开发过程中, 经常会通过传入一些<code>flag</code>来是函数内部的逻辑进行180度的大转变, 往往这样参数的引入会让人难以理解到底那些函数可以调用, 应该如何调用, 正确的做法应该是将<code>flag</code>提取出反映在函数名上</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deliveryDate</span>(<span class="params">order, isRush</span>)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// ====&gt;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="function"><span class="keyword">function</span> <span class="title">rushDeliveryDate</span>(<span class="params">order</span>)</span></span></span><br><span class="line"><span class="function"><span class="function"></span></span></span><br><span class="line"><span class="function"><span class="function"><span class="function"><span class="keyword">function</span> <span class="title">regularDeliveryDate</span>(<span class="params">order</span>)</span></span></span></span><br></pre></td></tr></table></figure>
-<h3 id="保持对象完整"><a href="#保持对象完整" class="headerlink" title="保持对象完整"></a>保持对象完整</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; low, heigh &#125; = dayTempRange</span><br><span class="line">withinRange(low, heigh)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ===&gt;</span></span><br><span class="line">withRange(dayTempRange)</span><br></pre></td></tr></table></figure>
-<h3 id="以命令取代函数"><a href="#以命令取代函数" class="headerlink" title="以命令取代函数"></a>以命令取代函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">score</span>(<span class="params">candidate, medicalExam, scoringGuide</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">let</span> healthLevel = <span class="number">0</span></span><br><span class="line">  <span class="comment">// long body code</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ====&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Scorer</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">candidate, medicalExam, scoringGuide</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.candidate = candidate</span><br><span class="line">    <span class="built_in">this</span>.medicalExam = medicalExam</span><br><span class="line">    <span class="built_in">this</span>.scorginGuide = scoringGuide</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">excute</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>._result = <span class="number">0</span></span><br><span class="line">    <span class="built_in">this</span>._healthLevel = <span class="number">0</span></span><br><span class="line">    <span class="comment">// long body code</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>将函数封装成自己的对象, 有时也是有用的方法, 这种对象我们通常称之为<code>命令对象</code>, 这种对象通常只服务于单一函数, 获得对该函数的请求, 执行该函数, 就是这种对象存在的意义</p>
-<p>与普通的函数相比, 命令对象有更强的表达能力以及更大的控制灵活性. 也可以命令对象增加更多的附加操作, 比如<code>撤销</code></p>
-<h3 id="以委托取代子类"><a href="#以委托取代子类" class="headerlink" title="以委托取代子类"></a>以委托取代子类</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span> </span>&#123;</span><br><span class="line">  <span class="keyword">get</span> <span class="title">daysToShip</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="built_in">this</span>.priorityDelegate)</span><br><span class="line">      ? <span class="built_in">this</span>._priorityDelegate.daysToShip</span><br><span class="line">      : <span class="built_in">this</span>._warehouse.daysToShip</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PriorityOrderDelegate</span> </span>&#123;</span><br><span class="line">  <span class="keyword">get</span> <span class="title">daysToShip</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>._priorityPlan.daysToShip</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样做的原因有两个:</p>
-<ul>
-<li>1.继承存在短板, 最明显的是, 继承只能用于处理一个方向上的变化, 比如说我们可能希望’人’的行为根据’年龄段’不同, 并根据’收入水平’不同, 使用继承的话, 子类需要有年轻人, 老人, 也可以是富人以及穷人, 但是不能同时采用两种继承方式</li>
-<li><ol start="2">
-<li>继承给类之间引入了非常紧密的关系, 任何对超类上的修改, 都会对子类带来影响</li>
-</ol>
-</li>
-</ul>
-<h2 id="Outro"><a href="#Outro" class="headerlink" title="Outro"></a>Outro</h2><p>是一本值得细细思考的书, 也许之后我会每隔一年会再次翻阅, 相信到时候也会有新的感悟吧</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/17/%E9%87%8D%E6%9E%84-%E6%94%B9%E5%96%84%E6%97%A2%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AE%BE%E8%AE%A1-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -623,20 +663,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -683,12 +723,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">12k</span>
+    <span title="Symbols count total">19k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">11 mins.</span>
+    <span title="Reading time total">17 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
